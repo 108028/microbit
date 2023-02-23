@@ -76,6 +76,7 @@ basic.forever(function () {
         }
         for (let index = 0; index <= list_x.length - 1; index++) {
             led.plotBrightness(list_x[index], list_y[index], 255)
+            led.plotBrightness(x, y, 120)
         }
         led.plotBrightness(egg_x, egg_y, 50)
         basic.pause(time)
