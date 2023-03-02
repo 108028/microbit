@@ -1,3 +1,9 @@
+input.onButtonPressed(Button.B, function () {
+    turn += 1
+    if (turn > 3) {
+        turn = 0
+    }
+})
 input.onButtonPressed(Button.A, function () {
     turn += -1
     if (turn < 0) {
@@ -5,24 +11,7 @@ input.onButtonPressed(Button.A, function () {
     }
 })
 input.onButtonPressed(Button.AB, function () {
-    run = 1
-    turn = 0
-    dx = 1
-    dy = 0
-    x = 0
-    y = 0
-    egg_x = 4
-    egg_y = 4
-    list_x = [x]
-    list_y = [y]
-    score = 0
-    time = 1000
-})
-input.onButtonPressed(Button.B, function () {
-    turn += 1
-    if (turn > 3) {
-        turn = 0
-    }
+	
 })
 function move () {
     if (turn == 0) {
@@ -56,7 +45,27 @@ let dy = 0
 let dx = 0
 let turn = 0
 let run = 0
-run = 0
+control.inBackground(function () {
+    if (input.logoIsPressed()) {
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.pause(100)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+    }
+    if (input.buttonIsPressed(Button.A)) {
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.pause(100)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+    } else if (input.buttonIsPressed(Button.B)) {
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.pause(100)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+    } else if (input.buttonIsPressed(Button.AB)) {
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.pause(100)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+        serial.redirectToUSB()
+    }
+})
 basic.forever(function () {
     if (run == 1) {
         basic.clearScreen()
@@ -75,7 +84,7 @@ basic.forever(function () {
             list_y.pop()
         }
         for (let index = 0; index <= list_x.length - 1; index++) {
-            led.plotBrightness(list_x[index], list_y[index], 255)
+            led.plotBrightness(list_x[index], list_y[index], 215)
             led.plotBrightness(x, y, 120)
         }
         led.plotBrightness(egg_x, egg_y, 50)
@@ -83,6 +92,20 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
+    if (input.logoIsPressed()) {
+        run = 1
+        turn = 0
+        dx = 1
+        dy = 0
+        x = 0
+        y = 0
+        egg_x = 4
+        egg_y = 4
+        list_x = [x]
+        list_y = [y]
+        score = 0
+        time = 1000
+    }
     if (x < 0 || x > 4) {
         run = 0
         basic.showNumber(score)
